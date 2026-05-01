@@ -9,27 +9,28 @@
 <style>
 :root{
 
-  /* Primary Green Palette */
-  --green:#3f8f68;
-  --green-dk:#2b5f46;
-  --green-lt:#edf7f1;
+  /* Primary */
+/* Primary Purple */
+/* Primary */
+--green:#2f6f57;
+--green-dk:#1f4d3c;
+--green-lt:#eef6f2;
 
-  /* Elegant Gold */
-  --gold:#c9a24d;
-  --gold-dk:#a88437;
+/* Gold */
+--gold:#69542b;
+--gold-dk:#31a364;
 
-  /* Neutral Colors */
-  --white:#ffffff;
-  --bg:#f5f7f4;
-  --border:#dbe5dc;
+/* Neutral */
+--white:#ffffff;
+--bg:#f7f8f6;
+--border:#d9e2dc;
 
-  /* Text */
-  --text:#2f3d35;
-  --muted:#708074;
+/* Text */
+--text:#243028;
+--muted:#6c7a72;
 
-  /* Accent */
-  --red:#d64545;
-
+/* Accent */
+--red:#c84b4b;
   /* Shadows */
   --sh-sm:0 2px 10px rgba(16,52,33,.05);
   --sh-md:0 8px 24px rgba(16,52,33,.08);
@@ -146,18 +147,22 @@ img{max-width:100%;display:block}
 /* ── HERO ── */
 .hero{
   background:
-    linear-gradient(rgba(13,69,37,.78), rgba(149, 168, 158, 0.489)),
-    url('https://res.cloudinary.com/dq38km9rc/image/upload/v1777395135/ChatGPT_Image_Apr_28_2026_05_51_57_PM_hja4vf.png'),
-    linear-gradient(135deg, var(--green-dk), var(--green));
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  padding:56px 20px;
-  position:relative;
-  overflow:hidden;
+    linear-gradient(
+      rgba(15, 23, 42, 0.342),
+      rgba(15, 23, 42, 0.11)
+    ),
+    url('https://res.cloudinary.com/dq38km9rc/image/upload/v1777664325/ChatGPT_Image_May_1_2026_07_31_33_PM_hghtgt.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding: 80px 0 120px;
+
+  position: relative;
+  overflow: hidden;
 }
 .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
-.hero::after{content:'';position:absolute;top:20%;right:10%;width:80px;height:80px;background:radial-gradient(circle,rgba(201,162,62,.2),transparent);border-radius:50%;animation:float 6s ease-in-out infinite}
 .hero-orb{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(201,162,62,.14),transparent 70%);top:-120px;left:-100px;border-radius:50%;pointer-events:none;animation:pulse 8s ease-in-out infinite}
 .hero-in{max-width:1280px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:36px}
 .hero-txt{color:#fff;flex:1}
@@ -165,7 +170,7 @@ img{max-width:100%;display:block}
 .hero h1{font-size:clamp(22px,3.5vw,44px);font-weight:900;line-height:1.25;margin-bottom:16px}
 .hero h1 span{color:var(--gold)}
 .hero-logo{margin:5px 0 10px;display:flex;justify-content:flex-start}
-.hero-logo img{height:300px;width:auto;object-fit:contain;border-radius:0;background:transparent;padding:0;}
+.hero-logo img{height:120px;width:auto;object-fit:contain;border-radius:0;background:transparent;padding:0;}
 .hero p{font-size:15px;color:rgba(255,255,255,.82);max-width:460px;margin-bottom:28px;line-height:1.8}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn-gold-h{background:var(--gold);color:#fff;padding:12px 26px;border-radius:10px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(201,162,62,.4);transition:var(--ease)}
@@ -349,7 +354,7 @@ img{max-width:100%;display:block}
 }
 
 /* ── SHARED SECTION VIEWS ── */
-.view-section{display:none;opacity:0;transition:opacity .3s ease;min-height:calc(100vh - 180px);padding:32px 0 90px}
+.view-section{display:none;opacity:0;transition:opacity .3s ease;min-height:calc(100vh - 180px);padding:0 0 90px}
 .view-section.visible{display:block;opacity:1;animation:fadeUp .32s ease}
 
 /* ── CART VIEW ── */
@@ -484,6 +489,59 @@ select.fc{cursor:pointer}
     display:none;
   }
 
+  .logo img{
+    width:90px;
+  }
+
+  .hero-logo img{
+    height:80px;
+  }
+
+  /* HERO MOBILE ANIMATION */
+
+    /* HERO MOBILE */
+
+  .hero{
+
+    background:
+      linear-gradient(
+        rgba(31, 77, 60, 0.199),
+        rgba(36, 48, 40, 0.384)
+      ),
+      linear-gradient(
+        135deg,
+        #1f4d3c 0%,
+        #4da887a1 50%,
+        #2430284d 100%
+      );
+
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
+
+    padding:48px 18px 70px;
+
+    position:relative;
+    overflow:hidden;
+  }
+
+  .hero::before{
+    opacity:.03;
+  }
+
+  .hero::after{
+    display:none;
+  }
+
+  .hero-cloud{
+    opacity:0;
+    visibility:hidden;
+    height:0;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+  }
+
   /* Search Expand Mobile */
 
   .srch{
@@ -527,22 +585,22 @@ select.fc{cursor:pointer}
   }
 
   .srch-btn{
-  position:relative;
-  z-index:25;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  font-size:14px;
-  flex-shrink:0;
+    position:relative;
+    z-index:25;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    font-size:14px;
+    flex-shrink:0;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-  padding:0;
-  margin-top:38px;
+    padding:0;
+    margin-top:38px;
 
-  left:-10px;
+    left:-10px;
   }
 
   .btn-wa span{
@@ -571,10 +629,6 @@ select.fc{cursor:pointer}
     top:70px;
   }
 
-  .hero{
-    padding:36px 16px;
-  }
-
   .hero p{
     font-size:13px;
   }
@@ -595,22 +649,20 @@ select.fc{cursor:pointer}
   .p-img{
     height:150px;
   }
- 
- .btn-add{
-  min-width:95px;
-  height:36px;
-  padding:0 3px;
-  font-size:12px;
-}
 
+  .btn-add{
+    min-width:95px;
+    height:36px;
+    padding:0 3px;
+    font-size:12px;
+  }
 
-.btn-det{
-  width:36px;
-  height:36px;
-  font-size:13px;
-  align-items: center;
-  
-}
+  .btn-det{
+    width:36px;
+    height:36px;
+    font-size:13px;
+    align-items:center;
+  }
 
   .fg{
     grid-template-columns:1fr;
@@ -741,6 +793,42 @@ transition:var(--ease);
 background:var(--gold-dk);
 transform:translateY(-2px);
 }
+.hero-cloud{
+  display:inline-block;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+
+  border:1px solid rgba(255,255,255,.22);
+
+  padding:14px 18px;
+  border-radius:22px;
+
+  color:#fff;
+  font-size:15px;
+  line-height:1.9;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.15);
+
+  max-width:520px;
+  
+}
+
+@media(max-width:640px){
+
+  .hero-cloud{
+    opacity:0;
+    visibility:hidden;
+    height:0;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+  }
+
+}
+
 
 </style>
 </head>
@@ -834,23 +922,18 @@ transform:translateY(-2px);
     <div class="hero-orb"></div>
     <div class="hero-in">
       <div class="hero-txt">
-        <div class="hero-badge"><i class="fas fa-star"></i> الأكثر مبيعاً في المنطقة</div>
+        
         <div class="hero-logo">
           <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777636069/c73ad36f-890d-44ec-bd79-dd8434a16794_hy8v6m.png" alt="شعار مكتبة إقرأ">
         </div>
-        <p>تسوق أجود المنتجات المكتبية، الهدايا الفاخرة وخدمات الطباعة والنقش بالليزر </p>
+        <p class="hero-cloud">تسوق أجود المنتجات المكتبية، الهدايا الفاخرة وخدمات الطباعة والنقش بالليزر </p>
         <div class="hero-btns">
           <a href="#prodSec" class="btn-gold-h"><i class="fas fa-shopping-bag"></i>تصفح المنتجات</a>
           <button class="btn-out-h" onclick="openWA()"><i class="fab fa-whatsapp"></i>تواصل معنا</button>
         </div>
         
       </div>
-      <div class="hero-cards">
-        <div class="hc"><i class="fas fa-book-open"></i><span>كتب</span></div>
-        <div class="hc"><i class="fas fa-gift"></i><span>هدايا</span></div>
-        <div class="hc"><i class="fas fa-pen-fancy"></i><span>قرطاسية</span></div>
-        <div class="hc"><i class="fas fa-bolt"></i><span>ليزر</span></div>
-      </div>
+      
     </div>
   </section>
 
@@ -951,7 +1034,7 @@ transform:translateY(-2px);
         <div class="panel">
           <div class="pnl-ttl"><i class="fas fa-envelope-open-text"></i>أرسل لنا رسالة</div>
           <div class="contact-logo">
-            <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777636069/c73ad36f-890d-44ec-bd79-dd8434a16794_hy8v6m.png" alt="شعار مكتبة إقرأ">
+            <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777633135/c73ad36f-890d-44ec-bd79-dd8434a16794_ovp47q.png" alt="شعار مكتبة إقرأ">
           </div>
           <form id="contactForm" onsubmit="submitContactForm(event)">
             <div class="fg">
@@ -1005,8 +1088,8 @@ transform:translateY(-2px);
               </button>
               
               <button class="btn-out-h share-btn" onclick="shareProduct()">
-                <i class="fas fa-share-alt"></i>
-                مشاركة المنتج
+                <i class="fas fa-copy"></i>
+               نسخ رابط المنتج
             </button>
         </div>
       </div>
@@ -1518,13 +1601,16 @@ function openModal(id) {
 
   if (prodModal) {
     prodModal.classList.add('active');
+    history.pushState({modal:true}, "");
     document.body.style.overflow = 'hidden';
   }
 }
 
 function closeModal() {
   const prodModal = document.getElementById('prodModal');
-  if (prodModal) prodModal.classList.remove('active');
+  if (prodModal) {
+    prodModal.classList.remove('active');
+  }
   document.body.style.overflow = '';
 }
 
@@ -1945,32 +2031,20 @@ const CITIES = {
 };
 function shareProduct(){
 
-  if(!currentProduct) return;
+  const productLink =
+    `${window.location.origin}${window.location.pathname}?product=${currentProduct.id}`;
 
-  const url =
-    window.location.origin +
-    window.location.pathname +
-    '?product=' + encodeURIComponent(currentProduct.id);
+  navigator.clipboard.writeText(productLink)
+    .then(() => {
 
-  const text =
-`${currentProduct.name}
-السعر: ${currentProduct.price} دج`;
+      showToast('تم نسخ رابط المنتج');
 
-  if(navigator.share){
+    })
+    .catch(() => {
 
-    navigator.share({
-      title: currentProduct.name,
-      text: text,
-      url: url
+      showToast('تعذر نسخ الرابط','err');
+
     });
-
-  }else{
-
-    navigator.clipboard.writeText(url);
-
-    toast('تم نسخ رابط المنتج');
-
-  }
 
 }
 
@@ -2057,6 +2131,13 @@ window.addEventListener('load', () => {
 
   startCatAutoScroll();
 
+});
+
+window.addEventListener('popstate', function () {
+  const modal = document.getElementById('prodModal');
+  if (modal && modal.classList.contains('active')) {
+    closeModal();
+  }
 });
 
 /* ── INIT ── */
