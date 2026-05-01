@@ -119,10 +119,11 @@ img{max-width:100%;display:block}
 .ham:hover{background:var(--green-lt);color:var(--green)}
 
 /* ── CAT BAR ── */
-.cat-bar{background:var(--green-dk);position:sticky;top:68px;z-index:200}
-.cat-in{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;overflow-x:auto;scrollbar-width:none;gap:2px}
+.cat-bar{background:var(--green-dk);position:sticky;top:68px;z-index:200;padding-bottom:6px}
+.cat-in{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;overflow-x:auto;scrollbar-width:none;gap:10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 .cat-in::-webkit-scrollbar{display:none}
-.cat-a{display:flex;align-items:center;gap:6px;padding:10px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,.78);white-space:nowrap;transition:var(--ease);position:relative}
+.cat-a{display:flex;align-items:center;gap:6px;padding:10px 16px;font-size:12px;font-weight:700;color:rgba(255,255,255,.78);white-space:nowrap;transition:var(--ease);position:relative;flex:0 0 auto;scroll-snap-align:start;}
+.cat-a.auto-highlight{color:#fff;background:rgba(255,255,255,.14);}
 .cat-a::after{content:'';position:absolute;bottom:0;right:0;left:0;height:2px;background:var(--gold);transform:scaleX(0);transition:var(--ease)}
 .cat-a:hover,.cat-a.active{color:var(--gold);background:rgba(255,255,255,.07)}
 .cat-a:hover::after,.cat-a.active::after{transform:scaleX(1)}
@@ -950,7 +951,7 @@ transform:translateY(-2px);
         <div class="panel">
           <div class="pnl-ttl"><i class="fas fa-envelope-open-text"></i>أرسل لنا رسالة</div>
           <div class="contact-logo">
-            <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777636069/c73ad36f-890d-44ec-bd79-dd8434a16794_hy8v6m.png" alt="شعار مكتبة إقرأ">
+            <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777633135/c73ad36f-890d-44ec-bd79-dd8434a16794_ovp47q.png" alt="شعار مكتبة إقرأ">
           </div>
           <form id="contactForm" onsubmit="submitContactForm(event)">
             <div class="fg">
@@ -1972,30 +1973,6 @@ function shareProduct(){
   }
 
 }
-window.addEventListener('load', () => {
-
-  const params = new URLSearchParams(window.location.search);
-
-  const pid = params.get('product');
-
-  if(pid){
-
-    const waitProducts = setInterval(() => {
-
-      if(PRODS.length > 0){
-
-        clearInterval(waitProducts);
-
-        openModal(pid);
-
-      }
-
-    }, 300);
-
-  }
-
-});
-  // كل أكوادك هنا
 
   function toggleSearch(){
 
@@ -2016,6 +1993,71 @@ window.addEventListener('load', () => {
     }
 
   }
+
+let catAutoIndex = 0;
+let catAutoTimer = null;
+
+function scrollToCatItem(index){
+  const items = Array.from(document.querySelectorAll('.cat-in .cat-a'));
+  if(items.length === 0) return;
+  const item = items[index % items.length];
+  if(!item) return;
+  items.forEach(el => el.classList.remove('auto-highlight'));
+  item.classList.add('auto-highlight');
+  item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+}
+
+function startCatAutoScroll(){
+  if(window.innerWidth > 640) return;
+  const items = document.querySelectorAll('.cat-in .cat-a');
+  if(items.length <= 1) return;
+  clearInterval(catAutoTimer);
+  catAutoIndex = 0;
+  scrollToCatItem(catAutoIndex);
+  catAutoTimer = setInterval(() => {
+    catAutoIndex = (catAutoIndex + 1) % items.length;
+    scrollToCatItem(catAutoIndex);
+  }, 3000);
+}
+
+function stopCatAutoScroll(){
+  clearInterval(catAutoTimer);
+  catAutoTimer = null;
+  document.querySelectorAll('.cat-a.auto-highlight').forEach(el => el.classList.remove('auto-highlight'));
+}
+
+window.addEventListener('resize', () => {
+  if(window.innerWidth <= 640){
+    if(!catAutoTimer) startCatAutoScroll();
+  } else {
+    stopCatAutoScroll();
+  }
+});
+
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(window.location.search);
+
+  const pid = params.get('product');
+
+  if(pid){
+
+    const waitProducts = setInterval(() => {
+
+      if(PRODS.length > 0){
+
+        clearInterval(waitProducts);
+
+        openModal(pid);
+
+      }
+
+    }, 300);
+
+  }
+
+  startCatAutoScroll();
+
+});
 
 /* ── INIT ── */
 fetchProducts();
