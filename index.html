@@ -1852,7 +1852,18 @@ async function sendOrderWhatsApp(){
     btn.innerHTML = '<i class="fas fa-check-circle"></i> إتمام الطلب';
   }
 
-  showToast('تم إرسال الطلب بنجاح، سيتم التواصل معك قريباً', 'ok');
+  let msg = `📦 *طلب جديد*%0A%0A`;
+  msg += `👤 الاسم: ${name}%0A`;
+  msg += `📞 الهاتف: ${phone}%0A`;
+  msg += `🏙️ الولاية: ${state}%0A%0A`;
+  msg += `🛒 *المنتجات:*%0A`;
+  msg += waProducts;
+  msg += `%0A💰 *المجموع:* ${total.toLocaleString('ar-DZ')} دج`;
+
+  const waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+  window.open(waLink,'_blank');
+
+  showToast('تم تحويلك للواتساب لإرسال الطلب', 'ok');
   cart = [];
   save();
   renderCart();
