@@ -1034,7 +1034,7 @@ transform:translateY(-2px);
         <div class="panel">
           <div class="pnl-ttl"><i class="fas fa-envelope-open-text"></i>أرسل لنا رسالة</div>
           <div class="contact-logo">
-            <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777636069/c73ad36f-890d-44ec-bd79-dd8434a16794_hy8v6m.png" alt="شعار مكتبة إقرأ">
+            <img src="https://res.cloudinary.com/dq38km9rc/image/upload/v1777633135/c73ad36f-890d-44ec-bd79-dd8434a16794_ovp47q.png" alt="شعار مكتبة إقرأ">
           </div>
           <form id="contactForm" onsubmit="submitContactForm(event)">
             <div class="fg">
@@ -1121,7 +1121,7 @@ transform:translateY(-2px);
             </div>
             <div class="fg-g">
               <label>الولاية <span class="req">*</span></label>
-              <select id="fState" name="state" class="fc" required onchange="updateCities()">
+              <select id="fState" name="state" class="fc" required>
                 <option value="">اختر الولاية...</option>
                 <option>الجزائر العاصمة</option><option>وهران</option><option>قسنطينة</option>
                 <option>عنابة</option><option>بلعباس</option><option>باتنة</option>
@@ -1132,14 +1132,6 @@ transform:translateY(-2px);
                 <option>سكيكدة</option><option>أم البواقي</option><option>البويرة</option>
                 <option>الوادي</option><option>غرداية</option><option>الجلفة</option>
               </select>
-            </div>
-            <div class="fg-g">
-              <label>البلدية <span class="req">*</span></label>
-              <input type="text" id="fCity" name="city" class="fc" placeholder="اكتب البلدية" minlength="2" pattern=".*[A-Za-z\u0600-\u06FF].*" title="اكتب اسم البلدية بشكل صحيح" required>
-            </div>
-            <div class="fg-g full">
-              <label>العنوان التفصيلي <span class="req">*</span></label>
-              <input type="text" id="fAddr" name="address" class="fc" placeholder="الحي، الشارع، رقم المنزل" required>
             </div>
           </div>
         </form>
@@ -1804,10 +1796,8 @@ async function sendOrderWhatsApp(){
   const name  = document.getElementById('fName').value.trim();
   const phone = document.getElementById('fPhone').value.trim();
   const state = document.getElementById('fState').value.trim();
-  const city  = document.getElementById('fCity').value.trim();
-  const addr  = document.getElementById('fAddr').value.trim();
 
-  if(!name || !phone || !state || !city || !addr){
+  if(!name || !phone || !state){
     showToast('يرجى ملء جميع البيانات', 'err');
     return;
   }
@@ -1837,10 +1827,16 @@ async function sendOrderWhatsApp(){
   formData.append('name', name);
   formData.append('phone', phone);
   formData.append('state', state);
-  formData.append('city', city);
-  formData.append('address', addr);
+  formData.append('city', '');
+  formData.append('address', '');
   formData.append('products', productsText);
   formData.append('total', total);
+
+  const btn = document.getElementById('submitBtn');
+  if (btn) {
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+  }
 
   try{
     await fetch(SCRIPT_URL,{
@@ -1851,25 +1847,20 @@ async function sendOrderWhatsApp(){
     console.log(err);
   }
 
-  // رسالة واتساب
-  let msg = `📦 *طلب جديد*%0A%0A`;
-  msg += `👤 الاسم: ${name}%0A`;
-  msg += `📞 الهاتف: ${phone}%0A`;
-  msg += `🏙️ الولاية: ${state}%0A`;
-  msg += `📍 البلدية: ${city}%0A`;
-  msg += `🏠 العنوان: ${addr}%0A%0A`;
-  msg += `🛒 *المنتجات:*%0A`;
-  msg += waProducts;
-  msg += `%0A💰 *المجموع:* ${total.toLocaleString('ar-DZ')} دج`;
+  if (btn) {
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="fas fa-check-circle"></i> إتمام الطلب';
+  }
 
-  const waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
-  window.open(waLink,'_blank');
-
-  showToast('تم إرسال الطلب بنجاح','ok');
+  showToast('تم إرسال الطلب بنجاح، سيتم التواصل معك قريباً', 'ok');
   cart = [];
   save();
   renderCart();
   document.getElementById('orderForm').reset();
+
+  setTimeout(() => {
+    goHome();
+  }, 1500);
 }
 
 /* ── NAVIGATION & UI ── */
@@ -1966,28 +1957,6 @@ function applyFilters(){
   }, 300);
 }
 
-function updateCities(){
-  const state = document.getElementById('fState').value;
-  const cityInput = document.getElementById('fCity');
-  if (!cityInput) return;
-  
-  let list = document.getElementById('cityList');
-  if (!list) {
-    list = document.createElement('datalist');
-    list.id = 'cityList';
-    document.body.appendChild(list);
-    cityInput.setAttribute('list', 'cityList');
-  }
-  list.innerHTML = '';
-  
-  if (CITIES[state]) {
-    CITIES[state].forEach(city => {
-      const opt = document.createElement('option');
-      opt.value = city;
-      list.appendChild(opt);
-    });
-  }
-}
 
 function openWA(){ window.open(`https://wa.me/${WA_NUMBER}`, '_blank'); }
 
@@ -2019,16 +1988,7 @@ function showToast(msg, type='ok'){
   _tt = setTimeout(() => el.className = 'toast', 3200);
 }
 
-const CITIES = {
-  "الجزائر العاصمة":["الجزائر الوسطى","باب الوادي","حيدرة","بن عكنون","الحراش","القبة","بوزريعة","الدار البيضاء"],
-  "وهران":["وهران","السانية","أرزيو","بطيوة","عين الترك","بئر الجير","مرسى الحجاج"],
-  "قسنطينة":["قسنطينة","الخروب","ديدوش مراد","علي منجلي","الزيادية","حامة بوزيان"],
-  "عنابة":["عنابة","سرايدي","الحجار","برحال","شطايبي"],
-  "سطيف":["سطيف","بئر العرش","العلمة","أعين الكبيرة","الأرونة"],
-  "باتنة":["باتنة","ثنية العابد","بريكة","تازولت","أولاد سي سليمان"],
-  "بجاية":["بجاية","أقبو","خرزة","الكرنتيا","سيدي عيش"],
-  "تيزي وزو":["تيزي وزو","عزازقة","ذراع بن خدة","فريحة","تيقزيرت"],
-};
+
 function shareProduct(){
 
   const productLink =
@@ -2139,6 +2099,24 @@ window.addEventListener('popstate', function () {
     closeModal();
   }
 });
+
+(function () {
+
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (isAndroid && !/Chrome/i.test(navigator.userAgent)) {
+
+    const url = window.location.href;
+
+    window.location.href =
+      "intent://" +
+      url.replace(/^https?:\/\//, "") +
+      "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" + encodeURIComponent(url) + ";end";
+
+  }
+
+})();
+
 
 /* ── INIT ── */
 fetchProducts();
